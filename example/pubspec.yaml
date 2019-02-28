@@ -1,0 +1,25 @@
+name: example
+description: A new Flutter project.
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  provider: ^1.6.1
+
+  mastodon:
+    path: ../../../dart/mastodon
+
+  mastodon_flutter:
+    path: ../
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
