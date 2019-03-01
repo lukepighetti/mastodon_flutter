@@ -11,9 +11,6 @@ dependencies:
 
   provider: ^1.6.1
 
-  mastodon:
-    git: https://github.com/lukepighetti/mastodon-dart
-
   mastodon_flutter:
     path: ../
 
