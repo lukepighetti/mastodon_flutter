@@ -70,9 +70,11 @@ packages:
   mastodon:
     dependency: transitive
     description:
-      path: "../../../dart/mastodon"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "76cc1dd6917d0bcc14757cdf99f83d7d781c9d76"
+      url: "https://github.com/lukepighetti/mastodon-dart"
+    source: git
     version: "0.1.0"
   mastodon_flutter:
     dependency: "direct main"
@@ -130,6 +132,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.21.0"
+  shared_preferences:
+    dependency: transitive
+    description:
+      name: shared_preferences
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.5.1+1"
   sky_engine:
     dependency: transitive
     description: flutter

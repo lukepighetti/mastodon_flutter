@@ -65,7 +65,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "8ff18d5cab026e9c6bc3111c839fc6336a455d8b"
+      resolved-ref: "76cc1dd6917d0bcc14757cdf99f83d7d781c9d76"
       url: "https://github.com/lukepighetti/mastodon-dart"
     source: git
     version: "0.1.0"
@@ -111,6 +111,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.21.0"
+  shared_preferences:
+    dependency: "direct main"
+    description:
+      name: shared_preferences
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.5.1+1"
   sky_engine:
     dependency: transitive
     description: flutter

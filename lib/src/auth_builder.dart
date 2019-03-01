@@ -13,6 +13,7 @@ typedef AuthWidgetBuilder = Widget Function(
   BuildContext context,
   Function launchUrl,
   void Function(String) submitCode,
+  String token,
   Account account,
 );
 
@@ -79,11 +80,16 @@ class _AuthBuilderState extends State<AuthBuilder> with WidgetsBindingObserver {
       builder: (context, uri) => StreamBuilder<Account>(
             stream: bloc.account,
             initialData: bloc.account.value,
-            builder: (context, account) => widget.builder(
-                  context,
-                  uri.hasData ? _handleLaunchUrl : null,
-                  uri.hasData ? _handleSubmitCode : null,
-                  account.hasData ? account.data : null,
+            builder: (context, account) => StreamBuilder<String>(
+                  stream: bloc.token,
+                  initialData: bloc.token.value,
+                  builder: (_, token) => widget.builder(
+                        context,
+                        uri.hasData ? _handleLaunchUrl : null,
+                        uri.hasData ? _handleSubmitCode : null,
+                        token.hasData ? token.data : null,
+                        account.hasData ? account.data : null,
+                      ),
                 ),
           ),
     );
