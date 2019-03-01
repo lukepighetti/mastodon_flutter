@@ -12,7 +12,7 @@ dependencies:
   provider: ^1.6.1
 
   mastodon:
-    path: ../../../dart/mastodon
+    git: https://github.com/lukepighetti/mastodon-dart
 
   mastodon_flutter:
     path: ../

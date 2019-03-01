@@ -70,9 +70,11 @@ packages:
   mastodon:
     dependency: "direct main"
     description:
-      path: "../../../dart/mastodon"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "1791df4ca2c51b15d2b0b2a15ab00f040ec6c14b"
+      url: "https://github.com/lukepighetti/mastodon-dart"
+    source: git
     version: "0.1.0"
   mastodon_flutter:
     dependency: "direct main"

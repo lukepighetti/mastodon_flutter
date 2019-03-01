@@ -63,9 +63,11 @@ packages:
   mastodon:
     dependency: "direct main"
     description:
-      path: "../../dart/mastodon"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "8ff18d5cab026e9c6bc3111c839fc6336a455d8b"
+      url: "https://github.com/lukepighetti/mastodon-dart"
+    source: git
     version: "0.1.0"
   matcher:
     dependency: transitive
