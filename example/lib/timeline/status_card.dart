@@ -62,24 +62,34 @@ class _PosterSection extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                RichText(
-                  text: TextSpan(
-                    style: TextStyle(
-                      color: Theme.of(context).disabledColor,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                    ),
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: "$name  ",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w600,
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Expanded(
+                      child: RichText(
+                        text: TextSpan(
+                          style: TextStyle(
+                            color: Theme.of(context).disabledColor,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                          ),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: "$name  ",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            TextSpan(text: "$username · $timestamp"),
+                          ],
                         ),
                       ),
-                      TextSpan(text: "$username · $timestamp"),
-                    ],
-                  ),
+                    ),
+                    _StatsButton(
+                      iconData: FeatherIcons.chevronDown,
+                    )
+                  ],
                 ),
                 Html(
                   data: status.content,
