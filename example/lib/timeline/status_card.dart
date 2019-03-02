@@ -93,34 +93,28 @@ class _Actions extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            child: Table(
-              children: <TableRow>[
-                TableRow(
-                  children: <Widget>[
-                    _StatsButton(
-                      iconData: FeatherIcons.messageSquare,
-                      value: toots,
-                    ),
-                    _StatsButton(
-                      iconData: FeatherIcons.repeat,
-                      isHighlighted: isBoosted,
-                      value: boosts,
-                    ),
-                    _StatsButton(
-                      iconData: FeatherIcons.heart,
-                      isHighlighted: isFavourited,
-                      value: favourites,
-                    ),
-                  ],
-                )
-              ],
-            ),
-          ),
-          _StatsButton(
-            iconData: FeatherIcons.moreVertical,
+      child: Table(
+        children: <TableRow>[
+          TableRow(
+            children: <Widget>[
+              _StatsButton(
+                iconData: FeatherIcons.messageSquare,
+                value: toots,
+              ),
+              _StatsButton(
+                iconData: FeatherIcons.repeat,
+                isHighlighted: isBoosted,
+                value: boosts,
+              ),
+              _StatsButton(
+                iconData: FeatherIcons.heart,
+                isHighlighted: isFavourited,
+                value: favourites,
+              ),
+              _StatsButton(
+                iconData: FeatherIcons.share,
+              ),
+            ],
           )
         ],
       ),
@@ -144,7 +138,7 @@ class _StatsButton extends StatelessWidget {
     final _color = Theme.of(context).disabledColor;
     final _highlightedColor = Theme.of(context).primaryColor;
 
-    final double _size = 20;
+    final double _size = 18;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
