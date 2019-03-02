@@ -66,9 +66,7 @@ class _PosterSection extends StatelessWidget {
                   blockSpacing: 4,
                 ),
                 _Actions(
-                  toots: status.repliesCount,
-                  boosts: status.reblogsCount,
-                  favourites: status.favouritesCount,
+                  status: status,
                 ),
               ],
             ),
@@ -80,11 +78,16 @@ class _PosterSection extends StatelessWidget {
 }
 
 class _Actions extends StatelessWidget {
-  final int toots;
-  final int boosts;
-  final int favourites;
+  final Status status;
 
-  _Actions({this.toots, this.boosts, this.favourites});
+  _Actions({@required this.status});
+
+  int get toots => status.repliesCount;
+  int get boosts => status.reblogsCount;
+  int get favourites => status.favouritesCount;
+
+  bool get isBoosted => status.reblogged;
+  bool get isFavourited => status.favourited;
 
   @override
   Widget build(BuildContext context) {
@@ -103,10 +106,12 @@ class _Actions extends StatelessWidget {
                     ),
                     _StatsButton(
                       iconData: FeatherIcons.repeat,
+                      isHighlighted: isBoosted,
                       value: boosts,
                     ),
                     _StatsButton(
                       iconData: FeatherIcons.heart,
+                      isHighlighted: isFavourited,
                       value: favourites,
                     ),
                   ],
@@ -116,7 +121,6 @@ class _Actions extends StatelessWidget {
           ),
           _StatsButton(
             iconData: FeatherIcons.moreVertical,
-            value: 0,
           )
         ],
       ),
@@ -126,16 +130,20 @@ class _Actions extends StatelessWidget {
 
 class _StatsButton extends StatelessWidget {
   final IconData iconData;
+  final bool isHighlighted;
   final String value;
 
   _StatsButton({
     @required this.iconData,
-    @required int value,
+    this.isHighlighted = false,
+    int value = 0,
   }) : value = value > 0 ? value.toString() : "";
 
   @override
   Widget build(BuildContext context) {
-    final _color = Theme.of(context).accentColor;
+    final _color = Theme.of(context).disabledColor;
+    final _highlightedColor = Theme.of(context).primaryColor;
+
     final double _size = 20;
 
     return Row(
@@ -144,7 +152,7 @@ class _StatsButton extends StatelessWidget {
         Icon(
           iconData,
           size: _size,
-          color: _color,
+          color: isHighlighted ? _highlightedColor : _color,
         ),
         SizedBox(
           width: 8,
@@ -152,7 +160,7 @@ class _StatsButton extends StatelessWidget {
         Text(
           value,
           style: TextStyle(
-            color: _color,
+            color: isHighlighted ? _highlightedColor : _color,
           ),
         ),
       ],
