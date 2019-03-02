@@ -1,3 +1,4 @@
+import 'package:example/timeline/timeline_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:mastodon/mastodon.dart';
@@ -46,7 +47,12 @@ class _AuthScreenState extends State<AuthScreen> {
           print(account);
 
           if (isAuthenticated) {
-            print("We're authenticated!");
+            print("we're authenticated!");
+
+            Future.delayed(Duration(seconds: 1)).then((_) {
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (_) => TimelineScreen()));
+            });
           }
 
           return Column(
