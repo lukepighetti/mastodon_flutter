@@ -51,7 +51,9 @@ class _AuthScreenState extends State<AuthScreen> {
 
             Future.delayed(Duration(seconds: 1)).then((_) {
               Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (_) => TimelineScreen()));
+                MaterialPageRoute(
+                    builder: (_) => TimelineScreen(account: account)),
+              );
             });
           }
 

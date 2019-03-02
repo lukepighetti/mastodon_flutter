@@ -18,6 +18,9 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
           cardTheme: CardTheme(elevation: 0.3),
+          tabBarTheme: TabBarTheme(
+            labelColor: Colors.blue,
+          ),
         ),
         home: AuthScreen(),
       ),
