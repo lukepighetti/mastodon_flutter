@@ -9,7 +9,10 @@ dependencies:
   flutter:
     sdk: flutter
 
+  flutter_html: ^0.9.4
   provider: ^1.6.1
+  timeago: ^2.0.10
+  feather_icons_flutter: ^4.7.4
 
   mastodon_flutter:
     path: ../
