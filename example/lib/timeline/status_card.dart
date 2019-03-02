@@ -28,8 +28,14 @@ class _PosterSection extends StatelessWidget {
     @required this.status,
   }) : super(key: key);
 
-  String get name => status?.account?.displayName ?? status?.account?.username;
-  String get timestamp => timeago.format(status?.createdAt, locale: "en_short");
+  String get name => status?.account?.displayName;
+  String get username => "@" + status?.account?.username;
+
+  String get timestamp => timeago
+      .format(status?.createdAt, locale: "en_short")
+      .replaceAll(" ", "")
+      .replaceAll("~", "");
+
   String get iconUrl => status?.account?.avatarStatic.toString();
 
   @override
@@ -56,9 +62,24 @@ class _PosterSection extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(
-                  name,
-                  style: Theme.of(context).textTheme.title,
+                RichText(
+                  text: TextSpan(
+                    style: TextStyle(
+                      color: Theme.of(context).disabledColor,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                    ),
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: "$name  ",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      TextSpan(text: "$username · $timestamp"),
+                    ],
+                  ),
                 ),
                 Html(
                   data: status.content,
