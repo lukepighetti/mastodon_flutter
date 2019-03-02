@@ -90,23 +90,33 @@ class _Actions extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Table(
-        children: <TableRow>[
-          TableRow(
-            children: <Widget>[
-              _StatsButton(
-                iconData: FeatherIcons.messageSquare,
-                value: toots,
-              ),
-              _StatsButton(
-                iconData: FeatherIcons.repeat,
-                value: boosts,
-              ),
-              _StatsButton(
-                iconData: FeatherIcons.heart,
-                value: favourites,
-              ),
-            ],
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            child: Table(
+              children: <TableRow>[
+                TableRow(
+                  children: <Widget>[
+                    _StatsButton(
+                      iconData: FeatherIcons.messageSquare,
+                      value: toots,
+                    ),
+                    _StatsButton(
+                      iconData: FeatherIcons.repeat,
+                      value: boosts,
+                    ),
+                    _StatsButton(
+                      iconData: FeatherIcons.heart,
+                      value: favourites,
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+          _StatsButton(
+            iconData: FeatherIcons.moreVertical,
+            value: 0,
           )
         ],
       ),
