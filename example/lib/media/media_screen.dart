@@ -29,7 +29,6 @@ class _MediaScreenState extends State<_MediaScreen> {
   Attachment get attachment => widget.attachment;
 
   _handleExit() {
-    print("exit");
     Navigator.of(context).pop();
   }
 
@@ -41,15 +40,23 @@ class _MediaScreenState extends State<_MediaScreen> {
         child: Stack(
           fit: StackFit.expand,
           children: <Widget>[
-            FittedBox(
-              fit: BoxFit.contain,
+            Dismissible(
+              key: Key(attachment.id),
+              direction: DismissDirection.vertical,
 
-              /// The box fit has to match the sibling Hero
-              child: Hero(
-                tag: attachment.id,
-                child: Image.network(
-                  attachment.previewUrl.toString(),
-                  fit: BoxFit.cover,
+              /// Cannot be null because the hero tries to animate
+              resizeDuration: Duration(microseconds: 1),
+              onDismissed: (_) => _handleExit(),
+              child: FittedBox(
+                fit: BoxFit.contain,
+
+                /// The box fit has to match the sibling Hero
+                child: Hero(
+                  tag: attachment.id,
+                  child: Image.network(
+                    attachment.previewUrl.toString(),
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ),
