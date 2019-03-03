@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:mastodon/mastodon.dart';
 
+import '../media/media_screen.dart';
+
 class Media extends StatelessWidget {
   final Status status;
 
@@ -14,6 +16,10 @@ class Media extends StatelessWidget {
 
   bool get hasImages => images.isNotEmpty;
 
+  _handleNavigate(BuildContext context, Attachment attachment) {
+    showMediaScreen(context, attachment);
+  }
+
   @override
   Widget build(BuildContext context) {
     if (!hasImages)
@@ -25,9 +31,17 @@ class Media extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
           child: _MediaGrid(
             children: images
-                .map((i) => Image.network(
-                      i.previewUrl.toString(),
-                      fit: BoxFit.cover,
+                .map((i) => GestureDetector(
+                      onTap: () => _handleNavigate(context, i),
+
+                      /// The box fit has to match the sibling Hero
+                      child: Hero(
+                        tag: i.id,
+                        child: Image.network(
+                          i.previewUrl.toString(),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                     ))
                 .toList(),
           ),
