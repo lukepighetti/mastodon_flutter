@@ -30,7 +30,7 @@ class _PosterSection extends StatelessWidget {
   }) : super(key: key);
 
   String get name => status?.account?.displayName;
-  String get username => "@" + status?.account?.username;
+  String get username => status?.account?.username;
 
   String get timestamp => timeago
       .format(status?.createdAt, locale: "en_short")
@@ -76,13 +76,13 @@ class _PosterSection extends StatelessWidget {
                           ),
                           children: <TextSpan>[
                             TextSpan(
-                              text: "$name  ",
+                              text: "$name ",
                               style: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
-                            TextSpan(text: "$username · $timestamp"),
+                            TextSpan(text: "@$username · $timestamp"),
                           ],
                         ),
                       ),
