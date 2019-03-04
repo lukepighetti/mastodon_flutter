@@ -43,7 +43,6 @@ class _PostInfoState extends State<PostInfo> {
     setState(() {
       isVisible = !isVisible;
     });
-    print("Weee, $isVisible");
   }
 
   @override

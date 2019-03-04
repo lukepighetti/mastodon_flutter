@@ -44,11 +44,7 @@ class _AuthScreenState extends State<AuthScreen> {
         builder: (_, launchUrl, submitCode, token, account) {
           final isAuthenticated = account != null;
 
-          print(account);
-
           if (isAuthenticated) {
-            print("we're authenticated!");
-
             Future.delayed(Duration(seconds: 1)).then((_) {
               Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
