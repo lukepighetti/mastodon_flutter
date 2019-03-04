@@ -2,6 +2,8 @@ import 'package:feather_icons_flutter/feather_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:mastodon/mastodon.dart';
 
+import 'post_info.dart';
+
 /// Shows a [_MediaScreen] containing the given Attachment.
 ///
 /// Note: [Hero] is tagged by [Attachment.id] and must have a [BoxFit] that
@@ -105,6 +107,12 @@ class _MediaScreenState extends State<_MediaScreen> {
                 ),
               ),
             ),
+            Container(
+              alignment: Alignment.bottomLeft,
+              child: PostInfo(
+                status: status,
+              ),
+            )
           ],
         ),
       ),
