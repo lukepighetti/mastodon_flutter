@@ -6,27 +6,48 @@ import 'package:mastodon/mastodon.dart';
 ///
 /// Note: [Hero] is tagged by [Attachment.id] and must have a [BoxFit] that
 /// matches it's sibling [Hero].
-showMediaScreen(BuildContext context, Attachment attachment) {
+showMediaScreen(BuildContext context, Status status, Attachment attachment) {
   Navigator.push(
     context,
     _HeroDialogRoute(
-      builder: (BuildContext context) => _MediaScreen(attachment: attachment),
+      builder: (BuildContext context) =>
+          _MediaScreen(status: status, attachment: attachment),
     ),
   );
 }
 
 /// The media screen itself!
 class _MediaScreen extends StatefulWidget {
+  final Status status;
   final Attachment attachment;
 
-  _MediaScreen({@required this.attachment});
+  _MediaScreen({@required this.status, @required this.attachment});
 
   @override
   _MediaScreenState createState() => _MediaScreenState();
 }
 
 class _MediaScreenState extends State<_MediaScreen> {
+  PageController _controller;
+
+  Status get status => widget.status;
   Attachment get attachment => widget.attachment;
+  int get referralIndex => status.mediaAttachments.indexOf(attachment);
+
+  @override
+  initState() {
+    _controller = PageController(
+      initialPage: referralIndex,
+
+      /// >1 allows us to use [Container.margin] to add a border that
+      /// is only visible while scrolling between pages
+      ///
+      /// `final gap = (pageWidth * _controller.viewportFraction - pageWidth);`
+      viewportFraction: 1.05,
+    );
+
+    super.initState();
+  }
 
   _handleExit() {
     Navigator.of(context).pop();
@@ -34,31 +55,45 @@ class _MediaScreenState extends State<_MediaScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final pageWidth = MediaQuery.of(context).size.width;
+    final gap = (pageWidth * _controller.viewportFraction - pageWidth);
+
     return Material(
       color: Colors.grey.shade900,
       child: SafeArea(
         child: Stack(
           fit: StackFit.expand,
           children: <Widget>[
-            Dismissible(
-              key: Key(attachment.id),
-              direction: DismissDirection.vertical,
+            PageView(
+              controller: _controller,
 
-              /// Cannot be null because the hero tries to animate
-              resizeDuration: Duration(microseconds: 1),
-              onDismissed: (_) => _handleExit(),
-              child: FittedBox(
-                fit: BoxFit.contain,
+              /// Don't scroll side-to-side with 1 item
+              physics: ClampingScrollPhysics(),
+              children: status.mediaAttachments.map((a) {
+                return Container(
+                  /// Compensate for [PageController.viewportFraction]
+                  margin: EdgeInsets.symmetric(horizontal: gap / 2),
+                  child: Dismissible(
+                    key: Key(status.id),
+                    direction: DismissDirection.vertical,
 
-                /// The box fit has to match the sibling Hero
-                child: Hero(
-                  tag: attachment.id,
-                  child: Image.network(
-                    attachment.previewUrl.toString(),
-                    fit: BoxFit.cover,
+                    /// Cannot be null because the hero tries to animate if it is
+                    resizeDuration: Duration(microseconds: 1),
+                    onDismissed: (_) => _handleExit(),
+                    child: FittedBox(
+                      /// The box fit has to match the sibling Hero
+                      fit: BoxFit.contain,
+                      child: Hero(
+                        tag: a.id,
+                        child: Image.network(
+                          a.previewUrl.toString(),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              ),
+                );
+              }).toList(),
             ),
             Container(
               alignment: Alignment.topLeft,
@@ -97,7 +132,7 @@ class _HeroDialogRoute<T> extends PageRoute<T> {
   Duration get transitionDuration => const Duration(milliseconds: 300);
 
   @override
-  bool get maintainState => true;
+  bool get maintainState => false;
 
   @override
   Color get barrierColor => Colors.grey.shade900;

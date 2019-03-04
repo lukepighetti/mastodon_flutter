@@ -17,7 +17,7 @@ class Media extends StatelessWidget {
   bool get hasImages => images.isNotEmpty;
 
   _handleNavigate(BuildContext context, Attachment attachment) {
-    showMediaScreen(context, attachment);
+    showMediaScreen(context, status, attachment);
   }
 
   @override
