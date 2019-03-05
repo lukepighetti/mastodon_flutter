@@ -1,10 +1,9 @@
+import 'package:example/widgets/content.dart';
 import 'package:flutter/material.dart';
 import 'package:mastodon/mastodon.dart' hide Card;
 
-import 'package:flutter_html/flutter_html.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:feather_icons_flutter/feather_icons_flutter.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import 'media.dart';
 
@@ -92,10 +91,8 @@ class _PosterSection extends StatelessWidget {
                     )
                   ],
                 ),
-                Html(
-                  data: status.content,
-                  onLinkTap: (url) => launch(url),
-                  blockSpacing: 4,
+                Content(
+                  status: status,
                 ),
                 Media(
                   status: status,

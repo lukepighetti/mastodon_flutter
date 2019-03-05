@@ -65,9 +65,11 @@ packages:
   flutter_html:
     dependency: "direct main"
     description:
-      name: flutter_html
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "."
+      ref: modifiable-linkStyle
+      resolved-ref: "40a0b4a4b9680385f7aff3242a892626c50f7bcc"
+      url: "https://github.com/lukepighetti/flutter_html.git"
+    source: git
     version: "0.9.4"
   flutter_test:
     dependency: "direct dev"
@@ -75,7 +77,7 @@ packages:
     source: sdk
     version: "0.0.0"
   html:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: html
       url: "https://pub.dartlang.org"
@@ -114,7 +116,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "76cc1dd6917d0bcc14757cdf99f83d7d781c9d76"
+      resolved-ref: d7a854df5694453ff2c2c026ecaf9bc3d0eabc71
       url: "https://github.com/lukepighetti/mastodon-dart"
     source: git
     version: "0.1.0"

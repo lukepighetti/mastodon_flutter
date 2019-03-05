@@ -9,7 +9,14 @@ dependencies:
   flutter:
     sdk: flutter
 
-  flutter_html: ^0.9.4
+  flutter_html: 
+  # ^0.9.4
+    git: 
+      url: https://github.com/lukepighetti/flutter_html.git
+      ref: modifiable-linkStyle
+    # path: /tmp/flutter_html
+
+  html: ^0.13.3+3
   provider: ^1.6.1
   timeago: ^2.0.10
   feather_icons_flutter: ^4.7.4

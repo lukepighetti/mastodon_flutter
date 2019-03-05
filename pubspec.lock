@@ -65,7 +65,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "76cc1dd6917d0bcc14757cdf99f83d7d781c9d76"
+      resolved-ref: d7a854df5694453ff2c2c026ecaf9bc3d0eabc71
       url: "https://github.com/lukepighetti/mastodon-dart"
     source: git
     version: "0.1.0"
@@ -96,7 +96,7 @@ packages:
       name: pedantic
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.4.0"
+    version: "1.5.0"
   quiver:
     dependency: transitive
     description:
@@ -129,7 +129,7 @@ packages:
       name: source_span
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.5.4"
+    version: "1.5.5"
   stack_trace:
     dependency: transitive
     description:
@@ -187,5 +187,5 @@ packages:
     source: hosted
     version: "2.0.8"
 sdks:
-  dart: ">=2.1.0 <3.0.0"
+  dart: ">=2.1.1-dev.0.0 <3.0.0"
   flutter: ">=0.5.6 <2.0.0"
