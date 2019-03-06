@@ -30,8 +30,9 @@ class EmojiTextSpan extends TextSpan {
     final textStyle = _style ?? TextStyle(fontSize: 14);
 
     final emojiStyle = textStyle.copyWith(
-      fontSize: (textStyle.fontSize) * 1.25,
-      height: 0.1,
+      fontSize: (textStyle.fontSize) * 1.30,
+      height: 1,
+      letterSpacing: 2,
     );
 
     final spans = <TextSpan>[];
