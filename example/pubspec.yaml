@@ -9,7 +9,6 @@ dependencies:
   flutter:
     sdk: flutter
 
-  html: ^0.13.3+3
   provider: ^1.6.1
   timeago: ^2.0.10
   feather_icons_flutter: ^4.7.4

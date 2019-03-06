@@ -68,12 +68,12 @@ packages:
     source: sdk
     version: "0.0.0"
   html:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: html
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.13.3+3"
+    version: "0.13.4+1"
   http:
     dependency: transitive
     description:
