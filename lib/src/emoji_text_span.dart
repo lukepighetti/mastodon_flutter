@@ -29,7 +29,7 @@ class EmojiTextSpan extends TextSpan {
   static List<TextSpan> _parse(TextStyle _style, String text) {
     final emojiStyle = _style.copyWith(
       fontSize: (_style?.fontSize ?? 14) * 1.30,
-      height: (_style?.height ?? 1) * 0.7,
+      height: (_style?.height ?? 1) * 0.8,
       letterSpacing: 2,
     );
 
