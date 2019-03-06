@@ -7,7 +7,7 @@ import 'package:flutter/rendering.dart';
 /// See https://github.com/flutter/flutter/issues/28894
 class EmojiTextSpan extends TextSpan {
   EmojiTextSpan({
-    TextStyle style = const TextStyle(fontSize: 16, height: 1.2),
+    TextStyle style = const TextStyle(fontSize: 16, height: 1.1),
     String text,
     List<TextSpan> children,
     GestureRecognizer recognizer,
@@ -28,8 +28,8 @@ class EmojiTextSpan extends TextSpan {
 
   static List<TextSpan> _parse(TextStyle _style, String text) {
     final emojiStyle = _style.copyWith(
-      fontSize: (_style?.fontSize ?? 14) * 1.30,
-      height: (_style?.height ?? 1) * 0.8,
+      fontSize: (_style?.fontSize ?? 16) * 1.25,
+      height: (_style?.height ?? 1.1) * 0.6,
       letterSpacing: 2,
     );
 
