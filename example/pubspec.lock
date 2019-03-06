@@ -62,15 +62,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.1"
-  flutter_html:
-    dependency: "direct main"
-    description:
-      path: "."
-      ref: modifiable-linkStyle
-      resolved-ref: "40a0b4a4b9680385f7aff3242a892626c50f7bcc"
-      url: "https://github.com/lukepighetti/flutter_html.git"
-    source: git
-    version: "0.9.4"
   flutter_test:
     dependency: "direct dev"
     description: flutter
