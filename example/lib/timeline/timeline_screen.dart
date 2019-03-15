@@ -61,16 +61,19 @@ class __TimelineTabBarState extends State<_TimelineTabBar>
             controller: _controller,
             children: <Widget>[
               _Timeline(
-                future: mastodon.timeline(),
+                fetchStatuses: (_maxId) => mastodon.timeline(maxId: _maxId),
               ),
               _Timeline(
-                future: mastodon.publicTimeline(local: true),
+                fetchStatuses: (_maxId) =>
+                    mastodon.publicTimeline(local: true, maxId: _maxId),
               ),
               _Timeline(
-                future: mastodon.publicTimeline(local: false),
+                fetchStatuses: (_maxId) =>
+                    mastodon.publicTimeline(local: false, maxId: _maxId),
               ),
               _Timeline(
-                future: mastodon.statuses(account?.id),
+                fetchStatuses: (_maxId) =>
+                    mastodon.statuses(account?.id, maxId: _maxId),
               )
             ],
           ),
@@ -80,29 +83,68 @@ class __TimelineTabBarState extends State<_TimelineTabBar>
   }
 }
 
-class _Timeline extends StatelessWidget {
-  final Future<List<Status>> future;
+class _Timeline extends StatefulWidget {
+  final StatusGetter fetchStatuses;
 
-  _Timeline({@required this.future});
+  _Timeline({@required this.fetchStatuses});
+
+  @override
+  __TimelineState createState() => __TimelineState();
+}
+
+class __TimelineState extends State<_Timeline>
+    with AutomaticKeepAliveClientMixin {
+  final _controller = ScrollController();
+  TimelineBloc _bloc;
+
+  @override
+  didChangeDependencies() {
+    _bloc = TimelineBloc(widget.fetchStatuses);
+
+    _controller.addListener(_listener);
+
+    super.didChangeDependencies();
+  }
+
+  _listener() {
+    final pixelsRemaining =
+        _controller.position.maxScrollExtent - _controller.offset;
+
+    if (pixelsRemaining < 3000) {
+      _bloc.requestingMoreSink.add(true);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Status>>(
-      future: future,
-      initialData: null,
-      builder: (_, snap) {
-        final statuses = snap?.data;
+    return Scrollbar(
+      child: StreamBuilder<List<Status>>(
+        stream: _bloc.statuses,
+        initialData: null,
+        builder: (_, snap) {
+          final statuses = snap?.data;
 
-        if (statuses == null) {
-          return Center(
-            child: CircularProgressIndicator(),
+          if (statuses == null) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          return ListView(
+            controller: _controller,
+            children: statuses.map((s) => StatusCard(status: s)).toList(),
           );
-        }
-
-        return ListView(
-          children: statuses.map((s) => StatusCard(status: s)).toList(),
-        );
-      },
+        },
+      ),
     );
   }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  bool get wantKeepAlive => true;
 }
