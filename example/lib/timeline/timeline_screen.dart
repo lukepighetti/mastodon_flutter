@@ -133,6 +133,7 @@ class __TimelineState extends State<_Timeline>
           return ListView(
             controller: _controller,
             children: statuses.map((s) => StatusCard(status: s)).toList(),
+            cacheExtent: 1000,
           );
         },
       ),
