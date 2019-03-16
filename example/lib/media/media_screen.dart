@@ -87,9 +87,19 @@ class _MediaScreenState extends State<_MediaScreen> {
                       fit: BoxFit.contain,
                       child: Hero(
                         tag: a.id,
-                        child: Image.network(
-                          a.previewUrl.toString(),
-                          fit: BoxFit.cover,
+
+                        /// Stack the high quality image over the preview image so it loads gracefully
+                        child: Stack(
+                          children: <Widget>[
+                            Image.network(
+                              a.previewUrl.toString(),
+                              fit: BoxFit.cover,
+                            ),
+                            Image.network(
+                              a.url.toString(),
+                              fit: BoxFit.cover,
+                            ),
+                          ],
                         ),
                       ),
                     ),
