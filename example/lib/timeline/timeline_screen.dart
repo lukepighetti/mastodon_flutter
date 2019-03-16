@@ -61,19 +61,28 @@ class __TimelineTabBarState extends State<_TimelineTabBar>
             controller: _controller,
             children: <Widget>[
               _Timeline(
-                fetchStatuses: (_maxId) => mastodon.timeline(maxId: _maxId),
+                bloc: TimelineBloc(
+                  (_maxId) => mastodon.timeline(maxId: _maxId),
+                ),
               ),
               _Timeline(
-                fetchStatuses: (_maxId) =>
-                    mastodon.publicTimeline(local: true, maxId: _maxId),
+                bloc: TimelineBloc(
+                  (_maxId) =>
+                      mastodon.publicTimeline(local: true, maxId: _maxId),
+                  statusStream: mastodon.publicTimelineStream(local: true),
+                ),
               ),
               _Timeline(
-                fetchStatuses: (_maxId) =>
-                    mastodon.publicTimeline(local: false, maxId: _maxId),
+                bloc: TimelineBloc(
+                  (_maxId) =>
+                      mastodon.publicTimeline(local: false, maxId: _maxId),
+                  statusStream: mastodon.publicTimelineStream(local: false),
+                ),
               ),
               _Timeline(
-                fetchStatuses: (_maxId) =>
-                    mastodon.statuses(account?.id, maxId: _maxId),
+                bloc: TimelineBloc(
+                  (_maxId) => mastodon.statuses(account?.id, maxId: _maxId),
+                ),
               )
             ],
           ),
@@ -84,9 +93,9 @@ class __TimelineTabBarState extends State<_TimelineTabBar>
 }
 
 class _Timeline extends StatefulWidget {
-  final StatusGetter fetchStatuses;
+  final TimelineBloc bloc;
 
-  _Timeline({@required this.fetchStatuses});
+  _Timeline({@required this.bloc});
 
   @override
   __TimelineState createState() => __TimelineState();
@@ -95,12 +104,10 @@ class _Timeline extends StatefulWidget {
 class __TimelineState extends State<_Timeline>
     with AutomaticKeepAliveClientMixin {
   final _controller = ScrollController();
-  TimelineBloc _bloc;
+  TimelineBloc get _bloc => widget.bloc;
 
   @override
   didChangeDependencies() {
-    _bloc = TimelineBloc(widget.fetchStatuses);
-
     _controller.addListener(_listener);
 
     super.didChangeDependencies();

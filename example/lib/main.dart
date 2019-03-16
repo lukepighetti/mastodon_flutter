@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mastodon/mastodon.dart';
 import 'package:provider/provider.dart';
+import 'package:web_socket_channel/io.dart';
 
 import 'auth/auth_screen.dart';
 
@@ -12,7 +13,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StatefulProvider<Mastodon>(
-      valueBuilder: (_) => Mastodon(instance),
+      valueBuilder: (_) => Mastodon(
+            instance,
+            websocketFactory: (uri) => IOWebSocketChannel.connect(uri),
+          ),
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(

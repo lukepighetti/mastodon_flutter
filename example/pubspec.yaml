@@ -12,6 +12,7 @@ dependencies:
   provider: ^1.6.1
   timeago: ^2.0.10
   feather_icons_flutter: ^4.7.4
+  web_socket_channel: ^1.0.9
 
   mastodon_flutter:
     path: ../
