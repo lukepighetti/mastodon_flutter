@@ -119,9 +119,11 @@ packages:
   mastodon:
     dependency: transitive
     description:
-      path: "../../../dart/mastodon"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "41d667ad4475bfab380a67ca4c289ab650c97454"
+      url: "https://github.com/lukepighetti/mastodon-dart"
+    source: git
     version: "0.1.0"
   mastodon_flutter:
     dependency: "direct main"
@@ -276,5 +278,5 @@ packages:
     source: hosted
     version: "1.0.9"
 sdks:
-  dart: ">=2.1.1-dev.0.0 <3.0.0"
+  dart: ">=2.2.0 <3.0.0"
   flutter: ">=0.5.6 <2.0.0"

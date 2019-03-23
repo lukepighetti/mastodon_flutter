@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/rendering.dart';
 
@@ -7,7 +9,7 @@ import 'package:flutter/rendering.dart';
 /// See https://github.com/flutter/flutter/issues/28894
 class EmojiTextSpan extends TextSpan {
   EmojiTextSpan({
-    TextStyle style = const TextStyle(fontSize: 16, height: 1.1),
+    TextStyle style,
     String text,
     List<TextSpan> children,
     GestureRecognizer recognizer,
@@ -26,7 +28,14 @@ class EmojiTextSpan extends TextSpan {
       r"|\u2b1c|\u2b50|\u2b55|\u231a|\u231b|\u2328|\u23cf|[\u23e9-\u23f3]|[\u23f8-\u23fa]"
       r"|\ud83c\udccf|\u2934|\u2935|[\u2190-\u21ff])+)");
 
-  static List<TextSpan> _parse(TextStyle _style, String text) {
+  static List<TextSpan> _parse(TextStyle style, String text) {
+    /// Skip if not iOS
+    if (Platform.isIOS == false) {
+      return [TextSpan(style: style, text: text)];
+    }
+
+    final _style = style ?? const TextStyle(fontSize: 16, height: 1.1);
+
     final emojiStyle = _style.copyWith(
       fontSize: (_style?.fontSize ?? 16) * 1.25,
       height: (_style?.height ?? 1.1) * 0.6,
