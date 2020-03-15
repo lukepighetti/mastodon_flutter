@@ -9,10 +9,10 @@ dependencies:
   flutter:
     sdk: flutter
 
-  provider: ^1.6.1
-  timeago: ^2.0.10
+  provider: ^4.0.4
+  timeago: ^2.0.26
   feather_icons_flutter: ^4.7.4
-  web_socket_channel: ^1.0.9
+  web_socket_channel: ^1.1.0
 
   mastodon_flutter:
     path: ../

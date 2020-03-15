@@ -12,7 +12,7 @@ class TimelineScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Provider<Account>(
+    return Provider<Account>.value(
       value: account,
       child: Scaffold(
         appBar: AppBar(

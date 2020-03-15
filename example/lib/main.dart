@@ -12,11 +12,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StatefulProvider<Mastodon>(
-      valueBuilder: (_) => Mastodon(
-            instance,
-            websocketFactory: (uri) => IOWebSocketChannel.connect(uri),
-          ),
+    return Provider<Mastodon>(
+      create: (_) => Mastodon(
+        instance,
+        websocketFactory: (uri) => IOWebSocketChannel.connect(uri),
+      ),
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
