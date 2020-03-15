@@ -16,6 +16,14 @@ class _AuthScreenState extends State<AuthScreen> {
   final _controller = TextEditingController();
   AuthBloc bloc;
 
+  bool canSubmit = false;
+
+  void _handleChanged(String text) {
+    setState(() {
+      canSubmit = text.length > 10;
+    });
+  }
+
   @override
   void didChangeDependencies() {
     bloc = AuthBloc(
@@ -61,17 +69,29 @@ class _AuthScreenState extends State<AuthScreen> {
                 child: TextField(
                   enabled: submitCode != null,
                   controller: _controller,
-                  onChanged: submitCode,
                   style: Theme.of(context).textTheme.headline,
+                  onChanged: _handleChanged,
                   decoration: InputDecoration(
                     hintText: token ?? "Paste code here",
                   ),
                 ),
               ),
-              RaisedButton(
-                child: Text("Authenticate"),
-                onPressed: launchUrl,
-              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  RaisedButton(
+                    child: Text("Get login code"),
+                    onPressed: launchUrl,
+                    color: Colors.blue,
+                    textColor: Colors.white,
+                  ),
+                  RaisedButton(
+                    child: Text("Submit code"),
+                    onPressed:
+                        canSubmit ? () => submitCode(_controller.text) : null,
+                  ),
+                ],
+              )
             ],
           );
         },

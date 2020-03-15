@@ -65,11 +65,7 @@ class _AuthBuilderState extends State<AuthBuilder> with WidgetsBindingObserver {
   }
 
   _handleSubmitCode(String code) {
-    final isValid = bloc.mastodon.validateAuthCode(code);
-
-    if (isValid) {
-      bloc.codeSink.add(code);
-    }
+    bloc.codeSink.add(code);
   }
 
   @override
@@ -78,20 +74,20 @@ class _AuthBuilderState extends State<AuthBuilder> with WidgetsBindingObserver {
       stream: bloc.uri,
       initialData: bloc.uri.value,
       builder: (context, uri) => StreamBuilder<Account>(
-            stream: bloc.account,
-            initialData: bloc.account.value,
-            builder: (context, account) => StreamBuilder<String>(
-                  stream: bloc.token,
-                  initialData: bloc.token.value,
-                  builder: (_, token) => widget.builder(
-                        context,
-                        uri.hasData ? _handleLaunchUrl : null,
-                        uri.hasData ? _handleSubmitCode : null,
-                        token.hasData ? token.data : null,
-                        account.hasData ? account.data : null,
-                      ),
-                ),
+        stream: bloc.account,
+        initialData: bloc.account.value,
+        builder: (context, account) => StreamBuilder<String>(
+          stream: bloc.token,
+          initialData: bloc.token.value,
+          builder: (_, token) => widget.builder(
+            context,
+            uri.hasData ? _handleLaunchUrl : null,
+            uri.hasData ? _handleSubmitCode : null,
+            token.hasData ? token.data : null,
+            account.hasData ? account.data : null,
           ),
+        ),
+      ),
     );
   }
 
