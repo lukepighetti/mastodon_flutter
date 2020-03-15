@@ -1,8 +1,7 @@
 name: mastodon_flutter
 description: A new Flutter package project.
-version: 0.0.1
-author:
-homepage:
+version: 0.1.0+2
+homepage: https://github.com/lukepighetti/mastodon_flutter
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
