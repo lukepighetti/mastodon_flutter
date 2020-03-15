@@ -1,4 +1,4 @@
-import 'package:mastodon/mastodon.dart';
+import 'package:mastodon_dart/mastodon_dart.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 

@@ -11,9 +11,9 @@ dependencies:
   flutter:
     sdk: flutter
 
-  mastodon:
-    git: https://github.com/lukepighetti/mastodon-dart
-    # path: ../../dart/mastodon
+  mastodon_dart: ^0.1.0+8
+    # git: https://github.com/lukepighetti/mastodon-dart
+    # path: ../mastodon-dart
 
   html: ^0.13.3+3
   shared_preferences: ^0.5.1+1

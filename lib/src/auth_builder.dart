@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:mastodon/mastodon.dart';
+import 'package:mastodon_dart/mastodon_dart.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 /// [launchUrl] is null if it's not ready.

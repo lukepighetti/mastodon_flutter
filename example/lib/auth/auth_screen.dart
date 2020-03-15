@@ -1,7 +1,7 @@
 import 'package:example/timeline/timeline_screen.dart';
 import 'package:flutter/material.dart';
 
-import 'package:mastodon/mastodon.dart';
+import 'package:mastodon_dart/mastodon_dart.dart';
 import 'package:mastodon_flutter/mastodon_flutter.dart';
 import 'package:provider/provider.dart';
 

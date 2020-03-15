@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:mastodon/mastodon.dart';
+import 'package:mastodon_dart/mastodon_dart.dart';
 import 'package:mastodon_flutter/mastodon_flutter.dart';
 
 import '../media/media_screen.dart';

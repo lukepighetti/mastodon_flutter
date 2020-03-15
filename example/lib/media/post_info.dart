@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:mastodon/mastodon.dart';
+import 'package:mastodon_dart/mastodon_dart.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:html/parser.dart';
 

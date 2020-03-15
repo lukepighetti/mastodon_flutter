@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:mastodon/mastodon.dart' hide Card;
+import 'package:mastodon_dart/mastodon_dart.dart' hide Card;
 import 'package:provider/provider.dart';
 
 import 'status_card.dart';
