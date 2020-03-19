@@ -18,7 +18,10 @@ class _StatusContentState extends State<StatusContent> {
   Status get status => widget.status;
   String get name => status?.account?.displayName;
   String get username => status?.account?.username;
-  String get timestamp => timeago.format(status?.createdAt, locale: "en_short").replaceAll(" ", "").replaceAll("~", "");
+  String get timestamp => timeago
+      .format(status?.createdAt, locale: "en_short")
+      .replaceAll(" ", "")
+      .replaceAll("~", "");
   String get content => parse(status?.content).documentElement.text;
 
   @override

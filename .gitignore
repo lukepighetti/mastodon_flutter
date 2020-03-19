@@ -11,3 +11,4 @@ ios/Flutter/Generated.xcconfig
 ios/Runner/GeneratedPluginRegistrant.*
 example/pubspec.lock
 mastodon_flutter.iml
+pubspec.yaml.bak
