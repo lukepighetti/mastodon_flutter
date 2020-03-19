@@ -4,6 +4,7 @@
     - Media
     - MediaScreen
 - Renamed PostInfo to StatusContent
+- 0.2.0.+1: run `flutter format lib`
 
 ## 0.1.0 (March 15, 2020)
 
