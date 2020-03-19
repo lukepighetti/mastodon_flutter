@@ -1,107 +1,107 @@
-import 'dart:ui';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Element, Text;
 import 'package:mastodon_dart/mastodon_dart.dart';
-import 'package:timeago/timeago.dart' as timeago;
+import 'package:mastodon_flutter/mastodon_flutter.dart';
+import 'package:html/dom.dart';
 import 'package:html/parser.dart';
 
-/// This widget renders the HTML content found in a Status
-class StatusContent extends StatefulWidget {
+/// A dead-simple HTML parser that handles 99% of Mastodon
+/// content.
+///
+/// ActivityPub allows any HTML tags in the content field,
+/// but Mastodon only uses a few tags with classnames. Instead
+/// of using a more robust HTML parsing widget, we pick out the
+/// common cases and build them perfectly.
+///
+/// TODO: add mention/hashtag/link tap gestures
+/// TODO: use app theme?
+class StatusContent extends StatelessWidget {
+  final Document html;
   final Status status;
-  StatusContent({@required this.status});
 
-  @override
-  _StatusContentState createState() => _StatusContentState();
-}
+  StatusContent({@required Status status})
+      : html = parse(status.content),
+        status = status;
 
-class _StatusContentState extends State<StatusContent> {
-  bool isVisible = false;
-  Status get status => widget.status;
-  String get name => status?.account?.displayName;
-  String get username => status?.account?.username;
-  String get timestamp => timeago
-      .format(status?.createdAt, locale: "en_short")
-      .replaceAll(" ", "")
-      .replaceAll("~", "");
-  String get content => parse(status?.content).documentElement.text;
+  Element get body => html.body;
+  String get text => html.body.text;
+  String get content => html.body.innerHtml;
 
-  @override
-  void initState() {
-    Future.delayed(Duration(milliseconds: 300)).then((_) {
-      setState(() {
-        isVisible = true;
-      });
-    });
+  TextStyle get textStyle => TextStyle(
+        fontSize: 16,
+        height: 1.1,
+        color: Colors.black,
+      );
 
-    super.initState();
-  }
+  TextStyle get linkStyle => textStyle.copyWith(
+        color: Colors.blue,
+      );
 
-  _handleTap() {
-    setState(() {
-      isVisible = !isVisible;
-    });
+  List<TextSpan> parseNode(Node message) {
+    final spans = <TextSpan>[];
+
+    for (final node in message.nodes) {
+      if (node is Text) {
+        spans.add(
+          EmojiTextSpan(
+            text: node.text,
+          ),
+        );
+      } else if (node is Element) {
+        switch (node.localName) {
+          case "a":
+            spans.add(
+              TextSpan(
+                children: parseNode(node),
+                style: linkStyle,
+              ),
+            );
+            break;
+          case "p":
+            spans.addAll(parseNode(node));
+            spans.add(TextSpan(text: "\n\n"));
+            break;
+          case "br":
+            spans.add(TextSpan(text: "\n"));
+            break;
+          case "span":
+            switch (node.className) {
+              case "invisible":
+                break;
+              case "ellipsis":
+                spans.add(EmojiTextSpan(text: node.text + "..."));
+                break;
+              default:
+                spans.addAll(parseNode(node));
+            }
+            break;
+          default:
+            spans.addAll(parseNode(node));
+        }
+      }
+    }
+
+    final allWhitespace = RegExp(r"^\s*$", multiLine: false);
+
+    /// Remove all the trailing whitespace
+    final filtered = spans.reversed
+        .skipWhile(
+          (span) => allWhitespace.hasMatch(span?.toPlainText()),
+        )
+        .toList()
+        .reversed
+        .toList();
+
+    return filtered;
   }
 
   @override
   Widget build(BuildContext context) {
-    return ClipRect(
-      child: BackdropFilter(
-        filter: ImageFilter.blur(
-          sigmaX: 6.0,
-          sigmaY: 6.0,
-        ),
-        child: GestureDetector(
-          onTap: _handleTap,
-          child: AnimatedOpacity(
-            opacity: isVisible ? 1.0 : 0.0,
-            duration: Duration(milliseconds: 300),
-            child: AnimatedContainer(
-              transform: Matrix4.translationValues(
-                0.0,
-                isVisible ? 0.0 : 100,
-                0.0,
-              ),
-              duration: Duration(milliseconds: 300),
-              curve: Curves.easeOut,
-              color: Colors.black54,
-              padding: EdgeInsets.all(8),
-              child: Row(
-                children: <Widget>[
-                  CircleAvatar(
-                    backgroundImage: NetworkImage(
-                      status.account.avatarStatic.toString(),
-                    ),
-                  ),
-                  SizedBox(width: 8),
-                  Expanded(
-                    child: RichText(
-                      softWrap: false,
-                      overflow: TextOverflow.ellipsis,
-                      text: TextSpan(
-                        style: TextStyle(
-                          color: Colors.grey.shade500,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                        ),
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: "$name ",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              color: Colors.grey.shade400,
-                            ),
-                          ),
-                          TextSpan(text: "@$username · $timestamp"),
-                          TextSpan(text: "\n"),
-                          TextSpan(text: content),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
+    final spans = parseNode(html.body);
+
+    return RichText(
+      text: TextSpan(
+        style: textStyle,
+        children: spans,
       ),
     );
   }

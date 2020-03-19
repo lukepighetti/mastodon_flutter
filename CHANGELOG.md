@@ -1,3 +1,7 @@
+## 0.2.1 (3/19/2020
+- Correct `StatusContent` widget
+- New `MediaInfo` widget
+
 ## 0.2.0 (3/19/2020
 - Documentation updates
 - New widgets:
