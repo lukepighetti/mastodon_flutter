@@ -17,9 +17,12 @@ import 'package:html/parser.dart';
 class StatusContent extends StatelessWidget {
   final Document html;
   final Status status;
+  final Color textColor;
 
-  StatusContent({@required Status status})
-      : html = parse(status.content),
+  StatusContent({
+    @required Status status,
+    this.textColor = Colors.black,
+  })  : html = parse(status.content),
         status = status;
 
   Element get body => html.body;
@@ -29,7 +32,7 @@ class StatusContent extends StatelessWidget {
   TextStyle get textStyle => TextStyle(
         fontSize: 16,
         height: 1.1,
-        color: Colors.black,
+        color: textColor,
       );
 
   TextStyle get linkStyle => textStyle.copyWith(
