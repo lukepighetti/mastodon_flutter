@@ -4,6 +4,7 @@ pubspec.lock
 .packages
 .pub/
 .idea
+.vscode
 build/
 ios/.generated/
 ios/Flutter/Generated.xcconfig
