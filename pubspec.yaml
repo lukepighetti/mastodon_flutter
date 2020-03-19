@@ -1,6 +1,6 @@
 name: mastodon_flutter
 description: A companion package to mastodon_dart that provides Flutter widgets to assist in developing a Mastodon Flutter client.
-version: 0.2.1
+version: 0.2.1+0
 homepage: https://github.com/lukepighetti/mastodon_flutter
 
 environment:

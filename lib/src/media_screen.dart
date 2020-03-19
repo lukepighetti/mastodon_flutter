@@ -1,6 +1,7 @@
 import 'package:feather_icons_flutter/feather_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:mastodon_dart/mastodon_dart.dart';
+import 'package:mastodon_flutter/mastodon_flutter.dart';
 import '../src/status_content.dart';
 
 /// Shows a [_MediaScreen] containing the given Attachment.
@@ -110,7 +111,7 @@ class _MediaScreenState extends State<_MediaScreen> {
             ),
             Container(
               alignment: Alignment.bottomLeft,
-              child: StatusContent(
+              child: MediaInfo(
                 status: status,
               ),
             )
