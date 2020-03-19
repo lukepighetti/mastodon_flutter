@@ -1,31 +1,24 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:mastodon_dart/mastodon_dart.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:html/parser.dart';
 
-class PostInfo extends StatefulWidget {
+/// This widget renders the HTML content found in a Status
+class StatusContent extends StatefulWidget {
   final Status status;
-  PostInfo({@required this.status});
+  StatusContent({@required this.status});
 
   @override
-  _PostInfoState createState() => _PostInfoState();
+  _StatusContentState createState() => _StatusContentState();
 }
 
-class _PostInfoState extends State<PostInfo> {
+class _StatusContentState extends State<StatusContent> {
   bool isVisible = false;
-
   Status get status => widget.status;
-
   String get name => status?.account?.displayName;
   String get username => status?.account?.username;
-
-  String get timestamp => timeago
-      .format(status?.createdAt, locale: "en_short")
-      .replaceAll(" ", "")
-      .replaceAll("~", "");
-
+  String get timestamp => timeago.format(status?.createdAt, locale: "en_short").replaceAll(" ", "").replaceAll("~", "");
   String get content => parse(status?.content).documentElement.text;
 
   @override
@@ -66,15 +59,14 @@ class _PostInfoState extends State<PostInfo> {
               ),
               duration: Duration(milliseconds: 300),
               curve: Curves.easeOut,
-
-              ///
               color: Colors.black54,
               padding: EdgeInsets.all(8),
               child: Row(
                 children: <Widget>[
                   CircleAvatar(
-                    backgroundImage:
-                        NetworkImage(status.account.avatarStatic.toString()),
+                    backgroundImage: NetworkImage(
+                      status.account.avatarStatic.toString(),
+                    ),
                   ),
                   SizedBox(width: 8),
                   Expanded(

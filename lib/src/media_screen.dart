@@ -1,8 +1,7 @@
 import 'package:feather_icons_flutter/feather_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:mastodon_dart/mastodon_dart.dart';
-
-import 'post_info.dart';
+import '../src/status_content.dart';
 
 /// Shows a [_MediaScreen] containing the given Attachment.
 ///
@@ -12,8 +11,10 @@ showMediaScreen(BuildContext context, Status status, Attachment attachment) {
   Navigator.push(
     context,
     _HeroDialogRoute(
-      builder: (BuildContext context) =>
-          _MediaScreen(status: status, attachment: attachment),
+      builder: (BuildContext context) => _MediaScreen(
+        status: status,
+        attachment: attachment,
+      ),
     ),
   );
 }
@@ -87,12 +88,9 @@ class _MediaScreenState extends State<_MediaScreen> {
                       fit: BoxFit.contain,
                       child: Hero(
                         tag: a.id,
-                        child: FadeInImage(
-                          placeholder: NetworkImage(a.previewUrl.toString()),
-                          image: NetworkImage(a.url.toString()),
+                        child: Image.network(
+                          a.previewUrl.toString(),
                           fit: BoxFit.cover,
-                          fadeOutDuration: Duration(milliseconds: 150),
-                          fadeInDuration: Duration(milliseconds: 150),
                         ),
                       ),
                     ),
@@ -112,7 +110,7 @@ class _MediaScreenState extends State<_MediaScreen> {
             ),
             Container(
               alignment: Alignment.bottomLeft,
-              child: PostInfo(
+              child: StatusContent(
                 status: status,
               ),
             )
@@ -162,8 +160,7 @@ class _HeroDialogRoute<T> extends PageRoute<T> {
   }
 
   @override
-  Widget buildPage(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation) {
+  Widget buildPage(BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
     return builder(context);
   }
 

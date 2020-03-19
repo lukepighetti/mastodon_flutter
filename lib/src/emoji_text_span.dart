@@ -1,9 +1,8 @@
 import 'dart:io';
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/rendering.dart';
 
-/// A "polyfix" [TextSpan] that properly renders Emojis at the correct size
+/// A "polyfix" [TextSpan] that properly renders Emoji at the correct size
 /// and vertical-alignment for the given [style].
 ///
 /// See https://github.com/flutter/flutter/issues/28894

@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 /// Takes 1-4 widgets and lays them out in a social-media style grid.
-/// [aspectRatio] and [gap] can both be overriden.
+/// [aspectRatio] and [gap] can both be overridden.
 ///
 /// A social-media style grid is common in the industry. It has a [gap],
 /// maintains an [aspectRatio], and lays out up to four images in the following

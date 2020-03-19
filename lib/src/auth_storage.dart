@@ -1,7 +1,8 @@
 import 'package:mastodon_dart/mastodon_dart.dart';
-
 import 'package:shared_preferences/shared_preferences.dart';
 
+/// This class stores the user's authorization token locally
+/// via SharedPreferences
 class AuthStorage extends AuthStorageDelegate {
   @override
   saveToken(String token) async {

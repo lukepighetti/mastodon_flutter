@@ -3,9 +3,7 @@ import 'package:mastodon_dart/mastodon_dart.dart' hide Card;
 
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:feather_icons_flutter/feather_icons_flutter.dart';
-
-import 'media.dart';
-import 'content.dart';
+import 'package:mastodon_flutter/mastodon_flutter.dart';
 
 class StatusCard extends StatelessWidget {
   final Status status;
@@ -91,7 +89,7 @@ class _PosterSection extends StatelessWidget {
                     )
                   ],
                 ),
-                Content(
+                StatusContent(
                   status: status,
                 ),
                 Media(

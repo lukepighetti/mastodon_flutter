@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:mastodon_dart/mastodon_dart.dart';
-import 'package:mastodon_flutter/mastodon_flutter.dart';
+import '../src/media_screen.dart';
+import '../src/media_grid.dart';
 
-import '../media/media_screen.dart';
-
+/// This widget renders images found in a Status
+/// todo: add support for other media
 class Media extends StatelessWidget {
   final Status status;
 
@@ -23,30 +23,33 @@ class Media extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (!hasImages)
+    if (!hasImages) {
       return Container();
-    else
+    } else {
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(0),
           child: MediaGrid(
             children: images
-                .map((i) => GestureDetector(
-                      onTap: () => _handleNavigate(context, i),
+                .map(
+                  (i) => GestureDetector(
+                    onTap: () => _handleNavigate(context, i),
 
-                      /// The box fit has to match the sibling Hero
-                      child: Hero(
-                        tag: i.id,
-                        child: Image.network(
-                          i.previewUrl.toString(),
-                          fit: BoxFit.cover,
-                        ),
+                    /// The box fit has to match the sibling Hero
+                    child: Hero(
+                      tag: i.id,
+                      child: Image.network(
+                        i.previewUrl.toString(),
+                        fit: BoxFit.cover,
                       ),
-                    ))
+                    ),
+                  ),
+                )
                 .toList(),
           ),
         ),
       );
+    }
   }
 }
