@@ -3,6 +3,7 @@
 - New `MediaInfo` widget
 - 0.2.1+1: Fix `MediaInfo` not showing on `MediaScreen`
 - 0.2.1+2: Parameterize text color for `StatusContent`
+- 0.2.1+3: Update `mastodon_dart` dependency
 
 ## 0.2.0 (3/19/2020
 - Documentation updates
