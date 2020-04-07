@@ -1,3 +1,6 @@
+## 0.3.1 (4/7/2020)
+- Update `Media` widget to properly handle sensitive content
+
 ## 0.3.0 (4/6/2020)
 - BREAKING CHANGE: Completely revamp `AuthBuilder`. See example for details on how to use.
 - Add `deleteToken` function to `AuthStorage`
