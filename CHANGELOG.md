@@ -1,3 +1,8 @@
+## 0.3.0 (4/6/2020)
+- BREAKING CHANGE: Completely revamp `AuthBuilder`. See example for details on how to use.
+- Add `deleteToken` function to `AuthStorage`
+- Updated example app
+
 ## 0.2.1 (3/19/2020
 - Correct `StatusContent` widget
 - New `MediaInfo` widget

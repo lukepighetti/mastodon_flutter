@@ -1,19 +1,26 @@
 import 'package:mastodon_dart/mastodon_dart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-/// This class stores the user's authorization token locally
-/// via SharedPreferences
+/// This class provides functions for handling the user's authentication token locally via SharedPreferences.
 class AuthStorage extends AuthStorageDelegate {
+  /// Save an authentication token
   @override
-  saveToken(String token) async {
+  Future<void> saveToken(String token) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString("token", token);
+    return prefs.setString("token", token);
   }
 
+  /// Delete an authentication token
+  @override
+  Future<void> deleteToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.remove("token");
+  }
+
+  /// Retrieve an authentication token
   @override
   Future<String> get fetchToken async {
     final prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString("token");
-    return token;
+    return prefs.getString("token");
   }
 }

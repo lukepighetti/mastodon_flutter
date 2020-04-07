@@ -1,10 +1,17 @@
+import 'dart:async';
 import 'package:example/timeline/timeline_screen.dart';
 import 'package:flutter/material.dart';
-
 import 'package:mastodon_dart/mastodon_dart.dart';
 import 'package:mastodon_flutter/mastodon_flutter.dart';
 import 'package:provider/provider.dart';
 
+// On this screen, we use the AuthBuilder widget to listen to the AuthBloc we made in main.dart
+// and our _onLogin function. When the user returns to the application with a valid authentication token,
+// the AuthBloc will handle the authentication process and the AuthBuilder will use _onLogin to
+// take the user into the main part of the application. NOTE: If you do not want to have automatic login,
+// you don't have to. Just don't use the `onLogin` parameter of the AuthBuilder, configure your UI the way you need,
+// use the _authBuilderKey to use the `submitCode` function provided by AuthBuilder, and handle the navigation as you
+// see fit.
 class AuthScreen extends StatefulWidget {
   AuthScreen({Key key}) : super(key: key);
 
@@ -13,25 +20,20 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
-  final _controller = TextEditingController();
   AuthBloc bloc;
+  final _authBuilderKey = GlobalKey<AuthBuilderState>();
 
-  bool canSubmit = false;
-
-  void _handleChanged(String text) {
-    setState(() {
-      canSubmit = text.length > 10;
+  void _onLogin(Account account) {
+    scheduleMicrotask(() {
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (_) => TimelineScreen(account: account),
+      ));
     });
   }
 
   @override
   void didChangeDependencies() {
-    bloc = AuthBloc(
-      Provider.of<Mastodon>(context),
-      Uri.parse("https://github.com/lukepighetti/mastodon-flutter"),
-      storage: AuthStorage(),
-    );
-
+    bloc = Provider.of<AuthBloc>(context);
     super.didChangeDependencies();
   }
 
@@ -48,53 +50,30 @@ class _AuthScreenState extends State<AuthScreen> {
         title: Text("Login"),
       ),
       body: AuthBuilder(
+        key: _authBuilderKey,
         bloc: bloc,
-        builder: (_, launchUrl, submitCode, token, account) {
-          final isAuthenticated = account != null;
-
-          if (isAuthenticated) {
-            Future.delayed(Duration(seconds: 1)).then((_) {
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                    builder: (_) => TimelineScreen(account: account)),
-              );
-            });
-          }
-
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.all(16),
-                child: TextField(
-                  enabled: submitCode != null,
-                  controller: _controller,
-                  style: Theme.of(context).textTheme.headline,
-                  onChanged: _handleChanged,
-                  decoration: InputDecoration(
-                    hintText: token ?? "Paste code here",
-                  ),
+        onLogin: _onLogin,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.all(16),
+              child: Text(
+                  bloc.token.value == null ? 'No token yet' : bloc.token.value),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                RaisedButton(
+                  child: Text("Get login code"),
+                  onPressed: () => _authBuilderKey.currentState.launchUrl(),
+                  color: Colors.blue,
+                  textColor: Colors.white,
                 ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  RaisedButton(
-                    child: Text("Get login code"),
-                    onPressed: launchUrl,
-                    color: Colors.blue,
-                    textColor: Colors.white,
-                  ),
-                  RaisedButton(
-                    child: Text("Submit code"),
-                    onPressed:
-                        canSubmit ? () => submitCode(_controller.text) : null,
-                  ),
-                ],
-              )
-            ],
-          );
-        },
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

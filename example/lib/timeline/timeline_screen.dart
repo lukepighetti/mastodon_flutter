@@ -42,7 +42,7 @@ class __TimelineTabBarState extends State<_TimelineTabBar>
   @override
   Widget build(BuildContext context) {
     final mastodon = Provider.of<Mastodon>(context);
-    final account = Provider.of<Account>(context);
+    final account = Provider.of<AuthBloc>(context).account.value;
 
     return Column(
       children: <Widget>[
