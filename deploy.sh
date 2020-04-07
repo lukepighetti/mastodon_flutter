@@ -3,6 +3,7 @@ perl -i -pe 's/^(version:\s+\d+\.\d+\.\d+\+)(\d+)$/$1.($2+1)/e' pubspec.yaml
 
 # Format
 flutter format lib
+flutter format example/lib
 
 # Upload
 flutter packages pub publish --force
